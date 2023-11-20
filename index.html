@@ -9,6 +9,31 @@
       height: 100px;
       cursor: pointer;
     }
+    .wheel {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 5px solid #000;
+      position: relative;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slice {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip: rect(0px, 50px, 100px, 0px);
+      animation: rotateWheel 5s ease-in-out infinite;
+      transform-origin: 50% 50%;
+    }
+    @keyframes rotateWheel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -34,11 +59,32 @@
   <p id="toplamFiyat"></p>
   <p id="siparisDetay"></p>
   <p id="indirimliFiyat"></p> <!-- İndirimli fiyatı gösterecek alan -->
+  <div class="wheel">
+    <div class="slice" style="background-color: #FFD700; transform: rotate(0deg);"></div>
+    <div class="slice" style="background-color: #FFA500; transform: rotate(36deg);"></div>
+    <div class="slice" style="background-color: #FF6347; transform: rotate(72deg);"></div>
+    <div class="slice" style="background-color: #FFD700; transform: rotate(108deg);"></div>
+    <div class="slice" style="background-color: #FFA500; transform: rotate(144deg);"></div>
+    <div class="slice" style="background-color: #FF6347; transform: rotate(180deg);"></div>
+    <div class="slice" style="background-color: #FFD700; transform: rotate(216deg);"></div>
+    <div class="slice" style="background-color: #FFA500; transform: rotate(252deg);"></div>
+    <div class="slice" style="background-color: #FF6347; transform: rotate(288deg);"></div>
+    <div class="slice" style="background-color: #FFD700; transform: rotate(324deg);"></div>
+  </div>
 
   <script>
     let secilenUrunler = {};
 
-    // ... (Kodunuzun geri kalanı)
+    function ekleFiyat(urun) {
+      if (secilenUrunler[urun]) {
+        secilenUrunler[urun]++;
+      } else {
+        secilenUrunler[urun] = 1;
+      }
+      hesapla();
+    }
+
+    // Diğer fonksiyonlar buraya eklenecek
 
     function indirimKoduAl() {
       var instagramHesabi = document.getElementById('instagram').value;
@@ -55,7 +101,51 @@
       alert("Teşekkürler! Size Instagram üzerinden geri dönüş yapacağız: " + instagramHesabi);
     }
 
-    // ... (Kodunuzun geri kalanı)
+    function dönerÇarkıDöndür(indirimOrani) {
+      let derece = 360 / 50 * indirimOrani; // Dönme derecesini hesaplayalım
+      let wheel = document.querySelector('.wheel');
+      wheel.style.transition = 'transform 5s ease-out';
+      wheel.style.transform = `rotate(${derece}deg)`;
+    }
+
+    function indirimOranınıGöster(indirimOrani) {
+      alert(indirimOrani + "% indirim kazandınız!");
+    }
+
+    function indirimliFiyatHesapla(indirimOrani) {
+      let toplamFiyat = parseFloat(document.getElementById('toplamFiyat').innerText.replace('Toplam Fiyat: $', ''));
+      let indirimliFiyat = toplamFiyat - (toplamFiyat * (indirimOrani / 100));
+
+      document.getElementById('indirimliFiyat').innerText = "İndirimli Fiyat: $" + indirimliFiyat.toFixed(2);
+    }
+
+    function hesapla() {
+      let toplamFiyat = 0;
+      let siparisDetay = "";
+      for (let urun in secilenUrunler) {
+        if (urun === 'kahve1') {
+          toplamFiyat += secilenUrunler[urun] * 5;
+          siparisDetay += `Sade Kahve: ${secilenUrunler[urun]} adet<br>`;
+        } else if (urun === 'kahve2') {
+          toplamFiyat += secilenUrunler[urun] * 7;
+          siparisDetay += `Latte: ${secilenUrunler[urun]} adet<br>`;
+        } else if (urun === 'sandvic1') {
+          toplamFiyat += secilenUrunler[urun] * 8;
+          siparisDetay += `Peynirli Sandviç: ${secilenUrunler[urun]} adet<br>`;
+        } else if (urun === 'sandvic2') {
+          toplamFiyat += secilenUrunler[urun] * 9;
+          siparisDetay += `Tavuklu Sandviç: ${secilenUrunler[urun]} adet<br>`;
+        } else if (urun === 'tatli1') {
+          toplamFiyat += secilenUrunler[urun] * 4;
+          siparisDetay += `Muffin: ${secilenUrunler[urun]} adet<br>`;
+        } else if (urun === 'tatli2') {
+          toplamFiyat += secilenUrunler[urun] * 5;
+          siparisDetay += `Brownie: ${secilenUrunler[urun]} adet<br>`;
+        }
+      }
+      document.getElementById('toplamFiyat').innerHTML = "Toplam Fiyat: $" + toplamFiyat.toFixed(2);
+      document.getElementById('siparisDetay').innerHTML = siparisDetay;
+    }
   </script>
 </body>
 </html>
