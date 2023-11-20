@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yiyecek Siparişi</title>
+  <style>
+    img {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hoş Geldiniz!</h1>
+  
+  <h2>Kahve Seçenekleri:</h2>
+  <img src="https://i.nefisyemektarifleri.com/2023/04/27/americano-kahve-nedir-nasil-yapilir-9-faydasi.jpg" alt="Sade Kahve - $5" onclick="ekleFiyat('kahve1')">
+  <img src="https://i.lezzet.com.tr/images-xxlarge-secondary/latte-nedir-nasil-yapilir-63a67490-83ad-4a8c-a76a-dcb04e398985.jpg" alt="Latte - $7" onclick="ekleFiyat('kahve2')">
+  
+  <h2>Sandviç Seçenekleri:</h2>
+  <img src="https://i.imgur.com/tAUXYwq.jpg" alt="Peynirli Sandviç - $8" onclick="ekleFiyat('sandvic1')">
+  <img src="https://i.imgur.com/FqSppga.jpg" alt="Tavuklu Sandviç - $9" onclick="ekleFiyat('sandvic2')">
+  
+  <h2>Tatlı Seçenekleri:</h2>
+  <img src="https://bagpastaneleri.com/wp-content/uploads/2022/11/bag-urun-sablonu-SANSEBASTIAN-copy.png" alt="Muffin - $4" onclick="ekleFiyat('tatli1')">
+  <img src="https://res.cloudinary.com/hsxfx8igq/image/upload/t_16x9_recipe_image,f_auto/v1608585894/13_vjwdhl.jpg" alt="Brownie - $5" onclick="ekleFiyat('tatli2')">
+  
+  <br><br>
+  <label for="instagram">Instagram Hesabınız:</label>
+  <input type="text" id="instagram" name="instagram">
+  <button onclick="indirimKoduAl()">Indirimi Öğren</button>
+  
+  <p id="toplamFiyat"></p>
+  <p id="siparisDetay"></p>
+  <p id="indirimliFiyat"></p> <!-- İndirimli fiyatı gösterecek alan -->
+
+  <script>
+    let secilenUrunler = {};
+
+    // ... (Kodunuzun geri kalanı)
+
+    function indirimKoduAl() {
+      var instagramHesabi = document.getElementById('instagram').value;
+      var indirimOrani = Math.floor(Math.random() * 50) + 1; // Rastgele 1-50 arası bir rakam seç
+
+      dönerÇarkıDöndür(indirimOrani);
+      
+      setTimeout(function() {
+        indirimOranınıGöster(indirimOrani);
+      }, 5000);
+
+      indirimliFiyatHesapla(indirimOrani);
+
+      alert("Teşekkürler! Size Instagram üzerinden geri dönüş yapacağız: " + instagramHesabi);
+    }
+
+    // ... (Kodunuzun geri kalanı)
+  </script>
+</body>
+</html>
